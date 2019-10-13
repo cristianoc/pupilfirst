@@ -1,4 +1,4 @@
-class AutoVerifySubmissionMutator < ApplicationMutator
+class AutoVerifySubmissionMutator < ApplicationMutatorV2
   include AuthorizeStudent
 
   attr_accessor :target_id
@@ -14,6 +14,14 @@ class AutoVerifySubmissionMutator < ApplicationMutator
       passed_at: Time.zone.now,
       latest: true
     )
+  end
+
+  def pundit_class
+    TargetPolicy
+  end
+
+  def pundit_record
+    Target.find(target_id)
   end
 
   private
